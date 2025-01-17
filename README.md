@@ -1,10 +1,10 @@
-# Experimental Pixel Streaming 2 plugin release in 5.5
+# 在 UE 5.5 中发布的实验性 Pixel Streaming 2 插件
 
-From UE 5.5 onwards, Epic Games introduced a layer that makes it easier to maintain WebRTC internally. As the original Pixel Streaming plugin used WebRTC directly, this change meant that we had to introduce a new plugin to ensure a better transition phase for the developers who have developed custom solutions on top of the PixelStreaming plugin. For now, both the original Pixel Streaming plugin and the Pixel Streaming 2 plugin will be shipped with Unreal Engine to give users time to migrate.
+从 UE 5.5 开始，Epic Games 引入了一层，用于在内部更方便地维护 WebRTC。由于原版的 Pixel Streaming 插件直接使用 WebRTC，因此这一变更意味着我们必须引入一个新插件，以便为那些基于 PixelStreaming 插件开发自定义解决方案的开发者提供更好的过渡阶段。现阶段，原版 Pixel Streaming 插件和 Pixel Streaming 2 插件会同时随 Unreal Engine 一起提供，让用户有时间进行迁移。
 
-We have created a [migration guide](/Docs/pixel-streaming-2-migration-guide.md) to ensure a smooth transition for all licensees using the plugin and to highlight all major changes between the plugins.
+我们已经编写了一份[迁移指南](/Docs/pixel-streaming-2-migration-guide.md)，以帮助所有使用该插件的许可用户平稳过渡，并重点介绍新旧插件之间的主要差异。
 
-# Repository health checks and actions
+# 仓库健康检查与操作
 
 | Health Checks |
 |-|
@@ -23,12 +23,12 @@ We have created a [migration guide](/Docs/pixel-streaming-2-migration-guide.md) 
 | Frontend lib | [![Publish frontend lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml/badge.svg?branch=UE5.5)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml) | [![Publish frontend lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml/badge.svg?branch=UE5.4)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml) | [![Publish frontend lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml/badge.svg?branch=UE5.3)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-library-to-npm.yml) |
 | Frontend ui-lib | [![Publish ui-lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml/badge.svg?branch=UE5.5)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml) | [![Publish ui-lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml/badge.svg?branch=UE5.4)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml) | [![Publish ui-lib](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml/badge.svg?branch=UE5.3)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/publish-ui-library-to-npm.yml) |
 | Release | [![Releases](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml/badge.svg?branch=UE5.5)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml) | [![Releases](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml/badge.svg?branch=UE5.4)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml) | [![Releases](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml/badge.svg?branch=UE5.3)](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/actions/workflows/create-gh-release.yml) |
- 
-# The official home for the Pixel Streaming servers and frontend!
-The frontend and web server elements for Unreal Pixel Streaming (previously located in `Samples/PixelStreaming/WebServers`) are now in this repository, for all to contribute to. They are referred to as the **Pixel Streaming Infrastructure**.
+
+# Pixel Streaming 服务器与前端的官方主页！
+用于 Unreal Pixel Streaming（之前位于 `Samples/PixelStreaming/WebServers`）的前端和 Web 服务器元素现已合并到这个仓库，供所有人共同贡献。它们被称为 **Pixel Streaming Infrastructure**。
 
 ## Getting Started
-To **build** and **run** everything you need to connect to the Pixel Streaming plugin simply run the following in the root of your `PixelStreamingInfrastructure` directory:
+要 **构建** 并 **运行** 一切所需，以便连接到 Pixel Streaming 插件，只需在 `PixelStreamingInfrastructure` 目录的根目录下执行以下命令：
 
 **Windows**
 ```
@@ -40,63 +40,64 @@ To **build** and **run** everything you need to connect to the Pixel Streaming p
 ./SignallingWebServer/platform_scripts/bash/start.sh
 ```
 
-If you want to work on a specific library within this monorepo then `cd` into that directory and run:
+如果你想在这个 monorepo 中的某个特定库内进行工作，那么可以 `cd` 到那个目录并运行：
 
 `npm install`
 `npm run build-all`
 
-If you want to install all the dependencies and flush any existing `node_modules`, go to the root of the repo and run:
+如果你想安装所有依赖项并清空已有的 `node_modules`，可以在仓库的根目录执行：
 
 `npm install`
 
-This works because this monorepo is using [NPM workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces?v=true). Using NPM workspaces means:
 
-- Each sub-workspace within the monorepo does not have its own `package-lock.json`. There is only a single one in the root.
-- Common dependencies are hoisted into the root `node_modules` directory.
-- Some sub-workspaces will not have a `node_modules` directory because all their dependencies exist in the root `node_modules`.
-- When working locally within the monorepo dependencies on sub-workspaces will first try to use a local `symlink` to those dependencies instead of downloading the published packages from NPM. For example, `pixelstreaming-frontend` depends on `pixelstreaming-common`, when working in this repo that dependency will first be attempted to be resolved using the local `./Common` directory.
+这是因为该 monorepo 使用 [NPM workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces?v=true)。使用 NPM workspaces 意味着：
+
+- monorepo 中的每个子工作区都没有自己的 `package-lock.json` 文件，而是只有一个集中在根目录的文件。
+- 常见的依赖会提升（hoisted）到根目录的 `node_modules` 目录。
+- 某些子工作区可能没有自己的 `node_modules`，因为它们的依赖都位于根目录的 `node_modules` 中。
+- 当在 monorepo 内本地开发时，对子工作区的依赖会首先尝试通过本地 `symlink` 进行解决，而不是从 NPM 上下载已发布的包。例如，`pixelstreaming-frontend` 依赖 `pixelstreaming-common`，在此仓库中开发时，会首先尝试使用本地的 `./Common` 目录。
 
 ## Goals
 
-The goals of this repository are to:
+本仓库的目标是：
 
-- Increase the release cadence for the Pixel Streaming servers (to mitigate browser breaking changes sooner).
-- Encourage easier contribution of these components by Unreal Engine licensees.
-- Facilitate a more standard web release mechanism.
-- Grant a permissive license to distribute and modify this code wherever you see fit (MIT licensed).
+- 加快 Pixel Streaming 服务器的发布频率（以更快应对浏览器的破坏性更新）。
+- 鼓励 Unreal Engine 许可用户更轻松地对这些组件做出贡献。
+- 提供更标准化的 Web 发布机制。
+- 通过 MIT 许可证随心分发和修改此代码。
 
 ## Contributing
 
-If you would like to contribute to our repository, please reference our [contribution guide](CONTRIBUTING.md). Thank you for your time and your efforts!
+如果你想为我们的仓库贡献内容，请参阅我们的[贡献指南](CONTRIBUTING.md)。感谢你的时间和努力！
 
 ## Contents
 
-The Pixel Streaming Infrastructure contains reference implementations for all the components needed to run a pixel streaming application. They are structured as separate projects, which work together, but are designed to be modular and interoperable with other implementations which use WebRTC technology. These implementations include: 
-- A signalling web server, called Cirrus, found in [`SignallingWebServer/`](SignallingWebServer/).
-- An SFU (Selective Forwarding Unit), found in [`SFU/`](SFU/).
-- A common library for frontend applications, found in [`Common/`](Common/).
-- Several frontend projects for the WebRTC player and input, found in [`Frontend/`](Frontend/):
-  - shared libraries for [communication](Frontend/library/) and [UI](Frontend/ui-library/) functionality
-  - separate [implementations](Frontend/implementations/) using different techologies such as TypeScript or React/JSX
-  - For detailed information, see the [/frontend](/Frontend/).
-- A signalling protocol test application that validates implementations of the signalling protocol, found in [`SS_Test/`](SS_Test/).
+Pixel Streaming Infrastructure 包含了所有运行 Pixel Streaming 应用所需的组件的参考实现。它们被拆分为各个项目，可以协同工作，也可与其他 WebRTC 技术搭配使用。这些实现包括：
+- 一个名为 Cirrus 的信令 Web 服务器，位于 [`SignallingWebServer/`](SignallingWebServer/)。
+- 一个 SFU（Selective Forwarding Unit），位于 [`SFU/`](SFU/)。
+- 一个通用的前端库，位于 [`Common/`](Common/)。
+- 若干前端项目，位于 [`Frontend/`](Frontend/)，包括：
+  - [通信](Frontend/library/)和 [UI](Frontend/ui-library/) 的共享库
+  - 使用不同技术（例如 TypeScript 或 React/JSX）的[不同实现](Frontend/implementations/)
+  - 详情可参见 [/frontend](/Frontend/)。
+- 用于验证信令协议实现的测试应用，位于 [`SS_Test/`](SS_Test/)。
 
 ## Releases
-We release a number of different components under this repository, specifically:
+我们会在此仓库下发布多个不同的组件，主要包括：
 
-- Container images for the signalling server
-- NPM packages for the frontend
-- Source releases of this repo with the reference frontend built as a minified js bundle
+- 信令服务器的容器镜像
+- 前端的 NPM 包
+- 本仓库源码的发布版本，其中也包含构建后的前端（压缩后的 js bundle）
 
 ### Container images
 
-The following container images are built from this repository:
+以下容器镜像由本仓库构建：
 
 - [[Unofficial] pixel-streaming-signalling-server](https://hub.docker.com/r/pixelstreamingunofficial/pixel-streaming-signalling-server/tags)
 - [[Unofficial] pixel-streaming-sfu](https://hub.docker.com/r/pixelstreamingunofficial/pixel-streaming-sfu/tags)
 
 ### NPM Packages
-The following are `unofficial` NPM packages (official ones coming soon):
+下面是一些“非官方”NPM 包（官方版本即将发布）：
 
 | NPM Package | 5.5 | 5.4 | 5.3 |
 |-------------|-----|-----|-----|
@@ -126,13 +127,13 @@ npm i @epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.5
 
 ## Versions
 
-We maintain versions of the servers and frontend that are compatible with existing and in-development version of Unreal Engine. 
+我们在不同的分支中维护了与不同版本的 Unreal Engine 兼容的服务器和前端。
 
-:warning: **There are breaking changes between UE versions - so make sure you get the right version**. :warning:
+:warning: 不同的 UE 版本之间可能会有破坏性变化 —— 请确保使用正确的版本。 :warning:
 
-<ins>For a list of major changes between versions please refer to the [changelog](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/CHANGELOG.md).</ins>
+<ins>主要版本之间的更改，请参阅 changelog。</ins>
 
-This repository contains the following in branches that track Unreal Engine versions:
+本仓库包含以下分支，对应不同的 Unreal Engine 版本：
 
 | Branch | Status |
 |--------|--------|
@@ -144,12 +145,12 @@ This repository contains the following in branches that track Unreal Engine vers
 
 | Legend | Meaning |
 |---------|-----------|
-| Dev | This is our dev branch, intended to be paired with [ue5-main](https://github.com/EpicGames/UnrealEngine/tree/ue5-main) - experimental. |
-|Pre-release| Code in here will be paired with the next UE release, we periodically update this branch from `master`. |
-| Current | Supported and this is the branch tracking the **latest released** version of UE. |
-| Supported | We will accept bugfixes/issues for this version. |
-| End of life | Once the next UE version is released we will not support this version anymore. |
-| Unsupported | We will not be supporting this version with bugfixes. |
+| Dev | 这是我们的开发分支，与 ue5-main 配套——实验性。 |
+|Pre-release| 该分支将与下一版 UE 搭配，我们会定期从 master 更新该分支。|
+| Current | 受支持并与 最新发布 的 UE 版本对应。|
+| Supported | 接受该版本的 bug 修复和问题反馈。|
+| End of life | 当下一版 UE 发布后，此版本将不再获得支持。 |
+| Unsupported | 我们将不会为此版本提供任何修复。 |
 
 ## Legal
 © 2004-2024, Epic Games, Inc. Unreal and its logo are Epic’s trademarks or registered trademarks in the US and elsewhere. 
