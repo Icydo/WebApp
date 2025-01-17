@@ -1,20 +1,27 @@
-# Security Guidelines
+# 安全准则（Security Guidelines）
 
-To enhance the security of your Pixel Streaming deployments, it is wise to implement additional measures for protection. This documentation page aims to provide you with valuable recommendations and suggestions to bolster the security of your deployments. By following these guidelines, you can significantly enhance the overall security posture and safeguard your Pixel Streaming environment effectively.
+为了提升 Pixel Streaming 部署的安全性，你可以采取更多的安全防护措施。本页面将为你提供一些针对安全部署的有价值建议。通过遵循这些准则，你可以显著提高整体安全状况，并更好地保护你的 Pixel Streaming 环境。
 
-## Tips to Improve Security
-Please note that implementing the following suggestions may introduce additional setup complexity and could result in increased latency.
+## 提高安全性的提示
 
-1. **Isolate Unreal Engine Instance:** Avoid deploying the Unreal Engine instance on a cloud machine with a public IP. Instead, only allowlist the necessary servers, such as the signalling and TURN servers, to communicate with the UE instance.
+> **提示：** 实施以下建议可能会增加一些部署复杂度，并有可能带来额外的网络延迟。
 
-2. **Route Media Traffic through TURN Server:** For enhanced security, enforce routing all media traffic through the TURN server. By doing so, only the TURN server and signalling server will be permitted to communicate with the UE instance. Keep in mind that this approach may introduce some additional latency.
+1. **隔离 Unreal Engine 实例**  
+   避免将 Unreal Engine 实例部署在具有公网 IP 的云服务器上。相反，只应允许列入白名单的必要服务器（例如信令服务器、TURN 服务器）与 UE 实例进行通信。
 
-3. **Secure TURN Server with User Credentials:** Configure the TURN server with a user database and assign unique credentials to each user. This additional security layer prevents unauthorized access to the relay. By default, Pixel Streaming employs the same TURN credentials for every session, which may simplify access for potential attackers.
+2. **通过 TURN 服务器路由媒体流量**  
+   为了增强安全性，可以强制所有媒体流量都通过 TURN 服务器进行中继。这样一来，只有 TURN 服务器和信令服务器可以与 UE 实例通信。需要注意的是，此做法可能会增加一些延迟。
 
-4. **Avoid Storing Important Credentials in the UE Container:** As a precautionary measure, refrain from storing any critical credentials or sensitive information within the UE container. This practice helps maintain a higher level of security.
+3. **为 TURN 服务器配置用户凭据**  
+   在 TURN 服务器上设置用户数据库，并为每个用户分配唯一的访问凭据，可有效防止未经授权的用户使用 TURN 中继功能。默认情况下，Pixel Streaming 为每次会话使用相同的 TURN 凭据，这可能被潜在攻击者利用而简化入侵途径。
 
-5. **Disable Pixel Streaming Console Commands:** Pixel Streaming ensures that all media traffic is encrypted end-to-end, guaranteeing secure communication. However, note that Pixel Streaming allows users to send commands to the UE instance if enabled. To eliminate this possibility, launch without the `-AllowPixelStreamingCommands` flag.
+4. **避免在 UE 容器中存放重要凭据**  
+   作为预防措施，请不要在 UE 容器中存储任何关键的登录凭据或敏感信息。这样做能有效降低敏感数据泄露的风险。
 
-6. **Separate TURN and Signalling Servers:** It is recommended to avoid colocating the TURN and signalling servers with the UE instance on the same IP or virtual machine (VM). This enables you to configure separate ingress/egress security policies for each server, allowing flexibility in defining the desired level of strictness or looseness. For example, the TURN server can have more relaxed policies while the UE instance can have stricter ones.
+5. **禁用 Pixel Streaming 控制台命令**  
+   Pixel Streaming 会对所有媒体流量进行端到端加密，以确保通信安全。然而，Pixel Streaming 默认允许用户向 UE 实例发送一些命令（若启用）。若要彻底禁用此功能，运行时请勿使用 `-AllowPixelStreamingCommands` 启动参数。
 
-By following these tips, you can enhance the security of your Pixel Streaming setup and mitigate potential risks.
+6. **将 TURN 服务器与信令服务器分离部署**  
+   建议不要将 TURN 服务器和信令服务器与 UE 实例部署在同一台机器或同一 IP 上。将它们分别部署有助于为每台服务器配置独立的出入口流量策略。举例来说，你可以允许 TURN 服务器具有更宽松的网络策略，而对 UE 实例采取更严格的安全策略。
+
+通过遵循以上几点，你可以进一步提升 Pixel Streaming 的安全性并降低潜在风险。

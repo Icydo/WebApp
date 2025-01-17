@@ -1,23 +1,25 @@
 # @epicgames-ps/lib-pixelstreamingsignalling
 
-A library for developers wanting to implement tools that signal Pixel Streaming applications.
+一个用于开发者实现 Pixel Streaming 应用信令功能的库。
 
-## Building
+---
 
-To build the `Signalling` module invoke the following commands in the `Common` and `Signalling` directories.
+## 构建（Building）
+
+要构建 `Signalling` 模块，需要在 `Common` 和 `Signalling` 目录下分别执行以下命令：
 
 ```bash
 npm install
 npm run build-all
-# Or npm run build
+# 或 npm run build
 ```
 
-This will result in a `/dist` or `/build` output directory.
+此操作会在各自的目录下生成 `/dist` or `/build` output directory.
 
-**Note:** If you just want to get a signalling server up and running refer to ["Getting Started"](../README.md#getting-started)
+**Note:** 如果你只是想让一个信令服务器（signalling server）跑起来，请参考 ["Getting Started"](../README.md#getting-started)
 
-### How this library is built
-The NPM packages supports:
+### 库的构建方式 How this library is built
+该 NPM 包支持：
 - ES6 module usage
 - CommonJS usage
 - Type definitions

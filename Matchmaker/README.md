@@ -1,5 +1,5 @@
-### Where is matchmaker?
-The matchmaker has been removed. It was not a good refernce for how to handle Pixel Streaming at scale and was adding to maintenance work, so we made the decision to remove it and discontinue its support.
+### Matchmaker 去哪儿了？
+Matchmaker 功能已经被移除。它并不是在大规模处理 Pixel Streaming 时的良好示例，而且也增加了维护工作量，因此我们决定将其删除并停止维护。
 
-### What if I still need Matchmaker?
-You can still obtain it from older revisions of this repo. It is removed for UE5.5, but any previous version of the Infrastructure repo will still have it, latest one being [UE 5.4 matchmaker](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/tree/UE5.4/Matchmaker).
+### 如果我还需要 Matchmaker 怎么办？
+你仍可以从本仓库的旧版本中获取它。Matchmaker 在 UE 5.5 的基础设施中被移除，但之前版本的基础设施仓库依旧保留了该功能，最新可用的是 [UE 5.4 matchmaker](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/tree/UE5.4/Matchmaker)。

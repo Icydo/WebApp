@@ -1,36 +1,38 @@
 # Wilbur
 
-A Direct replacement for cirrus.
+这是 `cirrus` 的直接替代版本。
 
-Wilbur is a small intermediary application that sits between streamers and other peers. It handles the initial connection negotiations and some other small ongoing control messages between peers as well as acting as a simple web server for serving the [Frontend](/Frontend/README.md) web application.
+Wilbur 是一个位于 `streamers` 和其他 peers 之间的小型中间应用。它负责处理初始连接协商，以及部分小规模的往返控制消息，同时也充当一个简单的 Web 服务器，用于提供 [Frontend](/Frontend/README.md) Web 应用。
 
-Differences of behaviour from the old cirrus are described [here](from_cirrus.md).
+和旧版 `cirrus` 在行为上的差异见[这里](from_cirrus.md)。
 
-## Building
-Building is handled by `npm` and `tsc`. However, the easiest method to install and build everything is to invoke:
+---
 
+## 构建（Building）
+本项目使用 `npm` 和 `tsc` 进行构建。然而，最简单的方法是运行：
 ```
 .\SignallingWebServer\platform_scripts\cmd\start.bat --dev
 ```
 
-This will install and build all the required components.
+这将安装并构建所有所需组件。
 
-## Building manually
+---
 
-However, if you would like to manually build them yourself (or build other configs), you will need to:
+## 手动构建
 
+如果你想自行手动构建（或使用其它配置进行构建），可以在以下目录分别执行：
 ```bash
 npm install
 npm run build
-# Or npm run build-dev
+# 或 npm run build-dev
 ```
 
-In the `/common`, `/Signalling`, and `/SignallingWebServer` directories (in that order).
+依次在 `/common`, `/Signalling`, 和 `/SignallingWebServer` 目录下运行（顺序非常重要）。
 
-Each of these will output built files into the `build` or `dist` directory.
+这些命令会将构建结果输出到各自的 build 或 dist 目录中。
 
-## Running
-After you have build the server you can run it with both `node` directly or the `npm start` script.
+运行（Running）
+构建好服务器后，你可以通过 node 或 npm start 脚本来运行它。
 ```
 npm start -- [arguments]
 ```
@@ -38,47 +40,41 @@ or
 ```
 node build/index.js [arguments]
 ```
-Invoking `npm start -- --help` or `node build/index.js --help` will display the configuration options.
+执行 `npm start -- --help` or `node build/index.js --help` 将显示可用的配置选项：
 ```
-Usage: node build/index.js [options]
+用法：node build/index.js [options]
 
-A basic signalling server application for Unreal Engine's Pixel Streaming applications.
+一个用于 Unreal Engine Pixel Streaming 应用的基础信令服务器。
 
-Options:
-  -V, --version                     output the version number
-  --log_folder <path>               Sets the path for the log files. (default: "logs")
-  --log_level_console <level>       Sets the logging level for console messages. (choices: "debug", "info", "warning",
-                                    "error", default: "info")
-  --log_level_file <level>          Sets the logging level for log files. (choices: "debug", "info", "warning",
-                                    "error", default: "info")
-  --console_messages [detail]       Displays incoming and outgoing signalling messages on the console. (choices:
-                                    "basic", "verbose", "formatted", preset: "basic")
-  --streamer_port <port>            Sets the listening port for streamer connections. (default: "8888")
-  --player_port <port>              Sets the listening port for player connections. (default: "80")
-  --sfu_port <port>                 Sets the listening port for SFU connections. (default: "8889")
-  --serve                           Enables the webserver on player_port. (default: false)
-  --http_root <path>                Sets the path for the webserver root. (default: "www")
-  --homepage <filename>             The default html file to serve on the web server. (default: "player.html")
-  --https                           Enables the webserver on https_port and enabling SSL (default: false)
-  --https_port <port>               Sets the listen port for the https server. (default: 443)
-  --ssl_key_path <path>             Sets the path for the SSL key file. (default: "certificates/client-key.pem")
-  --ssl_cert_path <path>            Sets the path for the SSL certificate file. (default: "certificates/client-cert.pem")
-  --https_redirect                  Enables the redirection of connection attempts on http to https. If this is not set
-                                    the webserver will only listen on https_port. Player websockets will still listen
-                                    on player_port. (default: false)
-  --rest_api                        Enables the rest API interface that can be accessed at
-                                    <server_url>/api/api-definition (default: false)
-  --peer_options <json-string>      Additional JSON data to send in peerConnectionOptions of the config message.
-  --log_config                      Will print the program configuration on startup. (default: false)
-  --stdin                           Allows stdin input while running. (default: false)
-  --no_config                       Skips the reading of the config file. Only CLI options will be used. (default:
-                                    false)
-  --config_file <path>              Sets the path of the config file. (default: "config.json")
-  --save                            After arguments are parsed the config.json is saved with whatever arguments were
-                                    specified at launch. (default: false)
-  -h, --help                        Display this help text.
+可选项（Options）：
+  -V, --version                     输出版本号
+  --log_folder <path>               设置日志文件的存储路径。（默认: "logs"）
+  --log_level_console <level>       设置控制台日志的级别。（可选: "debug", "info", "warning", "error"，默认: "info"）
+  --log_level_file <level>          设置日志文件的级别。（可选: "debug", "info", "warning", "error"，默认: "info"）
+  --console_messages [detail]       在控制台显示接收和发送的信令消息。（可选: "basic", "verbose", "formatted"，若仅加此选项则为 "basic"）
+  --streamer_port <port>            设置用于 Streamer（推流端）连接的侦听端口。（默认: "8888"）
+  --player_port <port>              设置用于 Player（播放端）连接的侦听端口。（默认: "80"）
+  --sfu_port <port>                 设置用于 SFU（Selective Forwarding Unit）连接的侦听端口。（默认: "8889"）
+  --serve                           在 player_port 上启动 Web 服务器。（默认: false）
+  --http_root <path>                设置 Web 服务器的根路径。（默认: "www"）
+  --homepage <filename>             指定在 Web 服务器上提供的默认主页文件名。（默认: "player.html"）
+  --https                           在 https_port 上启用 Web 服务器及 SSL。（默认: false）
+  --https_port <port>               设置 HTTPS 服务器的侦听端口。（默认: 443）
+  --ssl_key_path <path>             设置 SSL 密钥文件的路径。（默认: "certificates/client-key.pem"）
+  --ssl_cert_path <path>            设置 SSL 证书文件的路径。（默认: "certificates/client-cert.pem"）
+  --https_redirect                  启用对 HTTP 连接的重定向至 HTTPS。如果不设置此项，Web 服务器只在 https_port 上侦听。  
+                                    注：Player 的 WebSockets 仍会侦听在 player_port。（默认: false）
+  --rest_api                        启用可通过 <server_url>/api/api-definition 访问的 REST API 接口。（默认: false）
+  --peer_options <json-string>      在配置信息（config message）的 peerConnectionOptions 中添加额外的 JSON 数据。
+  --log_config                      启动时打印程序配置。（默认: false）
+  --stdin                           允许在运行时通过标准输入（stdin）交互。（默认: false）
+  --no_config                       跳过读取配置文件，仅使用命令行参数。（默认: false）
+  --config_file <path>              指定配置文件的路径。（默认: "config.json"）
+  --save                            解析完命令行参数后，将相关参数保存进 config.json。（默认: false）
+  -h, --help                        显示此帮助文本。
+
 ```
-These CLI options can also be described in a `config.json` (default config file overridable with --config_file) by specifying the command option name and value in a simple JSON object. eg.
+也可以在 `config.json` （默认为 config.json，可通过 --config_file 指定） 中使用 JSON 格式来描述这些 CLI 配置选项。例如：
 ```
 {
 	"log_folder": "logs",
@@ -94,30 +90,30 @@ These CLI options can also be described in a `config.json` (default config file 
 	"stdin": false
 }
 ```
-Given these options, to start the server with the closest behaviour as the old cirrus, you would invoke,
+给定这些选项，如果想让服务器的行为尽可能接近旧的 cirrus，可以执行：
 ```
 npm start -- --console_messages --https_redirect verbose --serve --log_config --http_root Public --homepage player.html
 ```
-Note that `Public` being used as the http root assumes your Frontend is in that directory from the old behaviour of the scripts. The new convenience scripts (`platform_scripts` directory) will now build the frontend into the `www` directory.
+注意这里使用 `Public` 作为 http root 假设你的前端位于该目录，沿用旧脚本的目录布局。而新的便捷脚本 (`platform_scripts` 目录下) 现在会将构建后的前端放在 `www` 目录中。
 
-## Development
-This implementation is built on the [Signalling](../Signalling) library which is supplied as a library for developing signalling applications. Visit its [documentation](../Signalling/docs) for more information.
+## 开发 Development
+该实现基于 [Signalling](../Signalling) 库，它以库的形式提供用于开发信令应用的功能。更多信息参见该库的 [documentation](../Signalling/docs) .
 
-### Self-signed certificates
-During development it may be useful to work with self-signed SSL certificates (e.g. HTTPS is required for some features like XR and microphone usage). Self signed certificates can be generated using the following instructions:
+### 自签名证书 Self-signed certificates
+在开发中，可能需要使用自签名证书（例如某些功能如 XR、麦克风等需要 HTTPS 才能正常工作）。可按照以下步骤生成自签名证书：
 
-1. Navigate to the `SignallingWebServer` directory.
-2. Create a subdirectory called `certificates`.
-3. Open Git Bash or your preferred shell.
+1. 进入 `SignallingWebServer` 目录.
+2. 创建一个名为 `certificates` 的子目录.
+3. 打开 Git Bash 或你喜欢的 shell。
 4. Run `openssl req -x509 -newkey rsa:4096 -keyout client-key.pem -out client-cert.pem -sha256 -nodes`
-5. Ensure your `config.json` contains:
+5. 确保你的 `config.json` 文件包含以下内容：
 
 ```json
 "ssl_key_path": "certificates/client-key.pem",
 "ssl_cert_path": "certificates/client-cert.pem",
 ```
 
-## Further Documentation
+## 更多文档 Further Documentation
 - [Protocol Messages](../Common/docs/messages.md)
 - [Protocol Negotiation](../Signalling/docs/Protocol.md)
 
