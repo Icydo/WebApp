@@ -1,24 +1,24 @@
 ## lib-pixelstreamingfrontend
 
-The core library for the browser/client side of Pixel Streaming experiences. **This library contains no UI.**
+Pixel Streaming体验的浏览器/客户端端核心库。**此库不包含UI。**
 
-See [lib-pixelstreamingfrontend-ui](/Frontend/implementations/typescript) for an example of how to build UI on top of this library.
+请参阅[lib-pixelstreamingfrontend-ui](/Frontend/implementations/typescript)了解如何在此库的基础上构建UI示例。
 
-### Key features
-- Create a websocket connection to communicate with the signalling server.
-- Create a WebRTC peer connection that displays the Unreal Engine video and audio.
-- Handling of input from the user and transmitting it back to Unreal Engine.
-- Opens a data channel connection sending and receiving custom data (in addition to input).
-- Programmable and url specified settings.
+### 主要功能
+- 创建一个WebSocket连接，与信令服务器进行通信。
+- 创建一个WebRTC对等连接，显示Unreal Engine的视频和音频。
+- 处理来自用户的输入并将其传输回Unreal Engine。
+- 打开数据通道连接，发送和接收自定义数据（除了输入之外）。
+- 可编程和通过URL指定的设置。
 
-### Adding it to your project
-`npm install @epicgames-ps/lib-pixelstreamingfrontend-ue5.5`
+### 如何将其添加到项目中
+npm install @epicgames-ps/lib-pixelstreamingfrontend-ue5.5
 
-### How this library is built
-The NPM packages supports:
-- ES6 module usage
-- CommonJS usage
-- Type definitions
-- Source maps
+### 本库的构建方式
+NPM包支持：
+- ES6模块使用
+- CommonJS使用
+- 类型定义
+- 源映射
 
-**Note:** The NPM package does not contain a minified/bundled output, this is up to the user to do this in their application.
+**注意：** NPM包不包含压缩/打包输出，用户需要在自己的应用程序中进行此操作。

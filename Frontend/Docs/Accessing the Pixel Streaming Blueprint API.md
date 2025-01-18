@@ -1,13 +1,11 @@
-## Accessing the Pixel Streaming Blueprint API
+## 访问 Pixel Streaming Blueprint API
 
-The Pixel Streaming Plugin that runs within the Unreal Engine exposes a Blueprint API that you can use in your gameplay logic to handle custom UI events sent by the player HTML page, and to emit events from the Unreal Engine to the player page.
+运行在 Unreal Engine 内的 Pixel Streaming 插件暴露了一个 Blueprint API，您可以在游戏逻辑中使用它来处理由玩家 HTML 页面发送的自定义 UI 事件，并从 Unreal Engine 向玩家页面发送事件。
 
-To access this Blueprint API, add the **PixelStreamingInputComponent** to an Actor in your level. Your application's **PlayerController** is a safe choice. You can do this by clicking **Add Component** in the Blueprint menu and selecting the **Pixel Streaming Input** component from the dropdown.
-
+要访问这个 Blueprint API，请将 **PixelStreamingInputComponent** 添加到您关卡中的一个 Actor。您的应用程序中的 **PlayerController** 是一个安全的选择。您可以通过在 Blueprint 菜单中点击 **Add Component** 并从下拉菜单中选择 **Pixel Streaming Input** 组件来完成这一操作。
 
 <p align="center">
-    <img src="Resources\Images\pixelstreaming-add-component.jpg" alt="Adding the Pixel Streaming component">
+    <img src="Resources\Images\pixelstreaming-add-component.jpg" alt="添加 Pixel Streaming 组件">
 </p>
 
-
-**_NOTE:_** Prior to UE 4.27, the PixelStreamingInput Component was automatically added when you loaded the Pixel Streaming plugin. This was problematic, and now requires users to add this to their project themselves, as seen above.
+**_注意:_** 在 UE 4.27 之前，PixelStreamingInput 组件在加载 Pixel Streaming 插件时会自动添加。这存在一些问题，现在要求用户按照上述方式手动将其添加到项目中。

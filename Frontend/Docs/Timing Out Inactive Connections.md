@@ -1,26 +1,26 @@
-## Timing Out Inactive Connections
+## 超时断开非活动连接
 
-In some kinds of Pixel Streaming deployments, you may want to automatically disconnect users who have been inactive for a certain period of time. For example, if you have a limited pool of Unreal Engine applications available, with access to those instances controlled by a matchmaking server, you may need to drop inactive older connections in order to make sure that you have application instances available to handle new incoming connection requests.
+在某些 Pixel Streaming 部署中，您可能希望自动断开一段时间内未活动的用户连接。例如，如果您有有限的 Unreal Engine 应用程序池，并且这些应用程序的访问受匹配服务器控制，您可能需要丢弃长期未活动的连接，以确保有可用的应用程序实例来处理新的连接请求。
 
-You can configure your Pixel Streaming implementation to detect when a user appears to be away from keyboard (AFK)—that is, when the user has not interacted with the player widget within a customizable time interval. The AFK system warns the user:
+您可以配置 Pixel Streaming 实现来检测用户是否处于离开键盘（AFK）状态——即当用户在可自定义的时间间隔内未与播放器小部件进行交互时。AFK 系统会向用户发出警告：
 
 <p align="center">
-    <img src="Resources\Images\afk-warning.png" alt="AFK timeout warning">
+    <img src="Resources\Images\afk-warning.png" alt="AFK 超时警告">
 </p>
 
-If the user continues not to respond, the AFK system waits 10 more seconds before ultimately disconnecting their session.
+如果用户继续不回应，AFK 系统将在最终断开会话前再等待 10 秒。
 
-Any user interaction with the player panel resets the AFK timer. This includes mouse moves and drags, mouse button presses, keyboard presses, touch events on mobile devices, and custom interactions you set up with the `emitCommand` and `emitUIInteraction` functions.
+任何用户与播放器面板的交互都会重置 AFK 计时器。这包括鼠标移动和拖动、鼠标按钮按下、键盘按键、移动设备上的触摸事件以及您通过 `emitCommand` 和 `emitUIInteraction` 函数设置的自定义交互。
 
-To use the AFK system, set the following properties in the [`Config`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/library/src/Config/Config.ts) object passed used to create a [`PixelStreaming`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/library/src/PixelStreaming/PixelStreaming.ts) stream.
+要使用 AFK 系统，请在用于创建 [`PixelStreaming`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/library/src/PixelStreaming/PixelStreaming.ts) 流的 [`Config`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/library/src/Config/Config.ts) 对象中设置以下属性。
 
-| Property | Default | Description |
-|    ---   |   ---   |     ---     |
-| `Flags.AFKDetection` | `false` | Determines whether the AFK system should check for user interactions. |
-| `NumericParameters.AFKTimeoutSecs` | `120` | Sets the maximum time interval, in seconds, that the user can remain away from keyboard before seeing a warning overlay in the player widget. |
-| `NumericParameters.AFKCountdown` | `10` | Sets the duration of the countdown, in seconds, before the stream is terminated if a user does not respond in time. |
+| 属性 | 默认值 | 描述 |
+| --- | --- | --- |
+| `Flags.AFKDetection` | `false` | 决定是否启用 AFK 系统来检查用户交互。 |
+| `NumericParameters.AFKTimeoutSecs` | `120` | 设置用户离开键盘后，播放器小部件中显示警告覆盖层前的最大时间间隔，单位为秒。 |
+| `NumericParameters.AFKCountdown` | `10` | 设置在用户未及时响应时，流被终止前的倒计时持续时间，单位为秒。 |
 
-For example, to activate AFK Detection and set it to kick in after five minutes, you would do the following in your implementation:
+例如，要启用 AFK 检测并设置为在五分钟后生效，您可以在实现中执行以下操作：
 
 ```typescript
 const config = new Config({ useUrlParams: true });
@@ -32,4 +32,4 @@ const stream = new PixelStreaming(config);
 ```
 
 **_Tip:_**
-If you want to customize the content of the overlay, you can replace the [`AFKOverlay`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/ui-library/src/Overlay/AFKOverlay.ts) class. You must then also extend the [`Application`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/ui-library/src/Application/Application.ts) class in order to use the new overlay.
+如果您想自定义覆盖层的内容，可以替换 [`AFKOverlay`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/ui-library/src/Overlay/AFKOverlay.ts) 类。然后 您还需要扩展 [`Application`](https://github.com/EpicGamesExt/PixelStreamingInfrastructure/blob/master/Frontend/ui-library/src/Application/Application.ts) 类才能使用新的覆盖层。

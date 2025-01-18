@@ -1,6 +1,6 @@
-## HTML Page Requirements
+## HTML页面要求
 
-Most of the HTML that will end up on the final page will actually be introduced by the Pixel Streaming application itself. Several example HTML pages are provided in the [sample implementations](/Frontend/implementations/typescript/src) where you can see the base page is very minimal, only serving as a space for the application to attach to and fill. The only concrete requirements are for ensuring there's sufficient space taken up by the element being attached to for the viewport to be visible on screen. In the sample implementations this is simply a `<body>` tag set to fill the screen without scrolling.
+最终出现在页面上的大部分HTML实际上是由Pixel Streaming应用程序本身引入的。多个示例HTML页面在[示例实现](/Frontend/implementations/typescript/src)中提供，您可以看到基础页面非常简洁，唯一的作用是为应用程序提供一个附加空间，并将其填充。唯一的具体要求是确保被附加的元素占据足够的空间，以便视口在屏幕上可见。在示例实现中，这只是一个设置为填充屏幕且不滚动的`<body>`标签。
 
 ```html
 <!-- Copyright Epic Games, Inc. All Rights Reserved. -->
@@ -12,7 +12,7 @@ Most of the HTML that will end up on the final page will actually be introduced 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<!-- The Pixel Streaming player fills 100% of its parent element but body has a 0px height unless filled with content. As such, we explicitly force the body to be 100% of the viewport height -->
+<!-- Pixel Streaming播放器填充其父元素的100%，但`body`元素的高度默认为0px，除非被内容填充。因此，我们明确强制`body`的高度为视口的100%。 -->
 <body style="width: 100vw; height: 100vh; min-height: -webkit-fill-available; font-family: 'Montserrat'; margin: 0px">
 
 </body>
@@ -20,18 +20,17 @@ Most of the HTML that will end up on the final page will actually be introduced 
 </html>
 ```
 
-As can be seen in the [sample implementations](/Frontend/implementations/typescript/src/player.ts), you must specify which element on the page the Pixel Streaming viewport is to be appended to. In the sample implementations this is typically done in the `document.body.onload` event listener and in this case appended to the `document.body` element in the DOM, causing it to fill the whole page.
+正如在[示例实现](/Frontend/implementations/typescript/src/player.ts)中所见，您必须指定Pixel Streaming视口要附加到页面上的哪个元素。在示例实现中，通常是在`document.body.onload`事件监听器中完成此操作，在这种情况下，它被附加到DOM中的`document.body`元素，从而使其填充整个页面。
 
-[//]: # (This has yet to be done)
-### Player File Location and URL
+[//]: # (这一步尚未完成)
+### 播放器文件位置和URL
 
-You have a few options for where you can place your custom HTML player page, and how client browsers can access it.
+您有几种选择来放置自定义HTML播放器页面，以及客户端浏览器如何访问它。
 
-*	You can create a new implementation page and place it in [`/Frontend/implementations/typescript/src/`](/Frontend/implementations/typescript/src) alongside the sample implementations. This must consist of both a base `.html` page and the `.ts` source for your application's entrypoint. This will then be accessible by appending the name of the `html` file to IP address or hostname of the computer running the Signalling Server.
-	For example, the sample `stresstest` page can be accessed on a locally-running infrastructure at `http:/127.0.0.1/stresstest.html`.
-*   You can customize the `HomepageFile` parameter for the Signaling and Web Server, and set the path to the filename of your custom HTML player page relative to the [Frontend implementations source folder](/Frontend/implementations/src). It will then be accessible when you access the IP address or hostname of the computer running the Signaling and Web Server.
-*   You can also use the **AdditionalRoutes** parameter for the Signaling and Web Server to customize the mapping between URL paths and local folders on your computer.
+* 您可以创建一个新的实现页面，并将其放置在[`/Frontend/implementations/typescript/src/`](/Frontend/implementations/typescript/src)中，和示例实现一起。这必须包含一个基础的`.html`页面和您的应用程序入口点的`.ts`源文件。然后，您可以通过将`html`文件名附加到运行信令服务器的计算机的IP地址或主机名来访问该页面。例如，示例的`stresstest`页面可以通过在本地运行的基础设施访问，URL为`http:/127.0.0.1/stresstest.html`。
+* 您可以自定义信令和Web服务器的`HomepageFile`参数，并设置自定义HTML播放器页面的文件路径，相对于[Frontend实现源文件夹](/Frontend/implementations/src)。然后，当访问运行信令和Web服务器的计算机的IP地址或主机名时，就可以访问该页面。
+* 您还可以使用信令和Web服务器的**AdditionalRoutes**参数来自定义URL路径与计算机本地文件夹之间的映射。
 
-### Building the Frontend
-When starting the infrastructure Signalling Server, the Frontend should be built automatically. If not, you can run the [`setup_frontend`](/SignallingWebServer/platform_scripts/) script for your platform to do so. If you subsequently make any changes to your local copy of the frontend, you will need to run the script again, appending `--build` as an argument to force a rebuild.
+### 构建前端
+启动基础设施信令服务器时，前端应该会自动构建。如果没有，您可以运行[`setup_frontend`](/SignallingWebServer/platform_scripts/)脚本来进行构建。如果之后对本地副本的前端进行了更改，您需要再次运行该脚本，并添加`--build`参数以强制重新构建。
 

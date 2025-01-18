@@ -1,29 +1,29 @@
-## Recommended Reading
-We recommend starting with the [sample implementations](/Frontend/implementations/typescript/src) in order to judge how to put a new player page together and integrate it with your Unreal Engine application. Additionally, if you have cloned the Pixel Streaming Infrastructure repository and made upstream changes, you can fork the repo and make a pull request.
+## 推荐阅读
+我们建议首先查看[示例实现](/Frontend/implementations/typescript/src)，以便评估如何构建新的播放器页面并将其与您的Unreal Engine应用程序集成。此外，如果您已经克隆了Pixel Streaming基础设施仓库并进行了上游更改，您可以分叉该仓库并发起拉取请求。
 
-## Using the default Player Webpage
-The Pixel Streaming Signalling and Web Server provides a sample player page that is already set up to stream in media from your Unreal Engine application and to send mouse, keyboard, and touch events back to the application. You can use this default player page as-is, if it meets your needs.
+## 使用默认播放器网页
+Pixel Streaming信令和Web服务器提供了一个示例播放器页面，该页面已设置为从您的Unreal Engine应用程序流媒体内容，并将鼠标、键盘和触摸事件发送回应用程序。如果默认播放器页面符合您的需求，您可以直接使用它。
 
-## Customising the Player Webpage
-With a little creativity and some knowledge of web technologies like TypeScript, HTML, and CSS, you can take full control over the player page, creating your own custom UIs for interacting with your Unreal Engine content remotely. You can trigger and respond to gameplay events, issue console commands to control the Unreal Engine's behavior, and more.
+## 自定义播放器网页
+通过一些创意和对Web技术（如TypeScript、HTML和CSS）的了解，您可以完全控制播放器页面，创建自己的自定义UI以远程交互Unreal Engine内容。您可以触发和响应游戏事件，发出控制Unreal Engine行为的控制台命令等。
 
-The pixel streaming infrastructure comes with a few [example implementations](/Frontend/implementations/) already provided which can be used to reference how the player webpage itself is structured. Mainly, they use the `Stream` class of the `library` package for WebRTC communication, and the `Application` class of the `ui-library` package for UI.
+Pixel Streaming基础设施已经提供了一些[示例实现](/Frontend/implementations/)，可以用作参考，了解播放器网页本身是如何构建的。主要是，它们使用`library`包中的`Stream`类进行WebRTC通信，并使用`ui-library`包中的`Application`类进行UI处理。
 
-The player's UI HTML is created when an [`Application`](/Frontend/ui-library/src/Application/Application.ts) instance is created. All the UI which forms the basis of the player page is attached to this object's `rootElement`. This element can be attached to the page to display it (in the example implementations, it is attached directly to the body itself).
+当创建一个[`Application`](/Frontend/ui-library/src/Application/Application.ts)实例时，播放器的UI HTML会被创建。所有构成播放器页面基础的UI都附加到该对象的`rootElement`上。这个元素可以附加到页面上进行显示（在示例实现中，它直接附加到body本身）。
 
-### Disabling or providing external UI elements
-By default, the `Application` automatically creates elements for displaying information about and controlling the stream, such as:
- - A full screen button
- - A Settings button + panel
- - A Stats button + panel
- - A video QP indicator
- - An XR button
+### 禁用或提供外部UI元素
+默认情况下，`Application`会自动创建一些元素，用于显示和控制流媒体，例如：
+ - 全屏按钮
+ - 设置按钮+面板
+ - 状态按钮+面板
+ - 视频QP指示器
+ - XR按钮
 
-However, for many applications, it might be beneficial to disable certain elements. For example, an end-user-facing web page with a stream might need to disallow settings changes like endpoint address, or simplify the experience for the user by not displaying technologically advanced information. In other cases, it might be good to style the player webpage using custom HTML/CSS, and use elements from that page to control the stream.
+然而，对于许多应用程序来说，禁用某些元素可能会更有利。例如，面向最终用户的网页流可能需要禁止更改设置，如端点地址，或者通过不显示技术性信息来简化用户体验。在其他情况下，可能希望使用自定义HTML/CSS样式化播放器网页，并使用该页面上的元素来控制流媒体。
 
-For such use cases, the initial configuration object used when createing an `Application` can be changed to customize the way UI elements are created. It is called `UIOptions` and can contain any combination of settings for the aforemention elements, stored in the following parameters: `settingsPanelConfig`, `statsPanelConfig`, `fullScreenControlsConfig`, `xrControlsConfig`, and `videoQpIndicatorConfig`.
+对于这种用例，可以更改创建`Application`时使用的初始配置对象，以自定义UI元素的创建方式。这个配置对象被称为`UIOptions`，它可以包含前述元素的任何组合设置，这些设置存储在以下参数中：`settingsPanelConfig`、`statsPanelConfig`、`fullScreenControlsConfig`、`xrControlsConfig`和`videoQpIndicatorConfig`。
 
-For example, to create an application UI with no settings panel or button, and using an external HTML button for toggling the stream's fullscreen state:
+例如，要创建一个没有设置面板或按钮的应用程序UI，并使用外部HTML按钮来切换流的全屏状态：
 ```ts
 // Import needed types
 import { Config, PixelStreaming } from '@epicgames-ps/lib-pixelstreamingfrontend-ue5.2';
@@ -45,21 +45,21 @@ const application = new Application({
 });
 ```
 
-The `PixelStreaming` object can also directly interface with custom-made UI through its event listeners. For example, making something happen when the video quantization parameter (which can be used to gauge the quality of the video stream) changes, the following can be done (continued from above):
+`PixelStreaming`对象还可以通过其事件监听器与自定义UI直接交互。例如，当视频量化参数（可用于衡量视频流的质量）发生变化时，可以执行以下操作（接着上面的内容）：
 ```ts
 stream.addEventListener('videoEncoderAvgQP', (qp: number) => {
 	/* Code to change any visuals needed based on the QP parameter */
 })
 ```
 
-### Customizing overlays
+### 自定义叠加层
 
-Further customizations can also be done using [`Overlays`](/Frontend/ui-library/src/Overlay). As the name suggests, these are overlaid onto the player page when certain conditions are met, such as the player being [absent](/Frontend/ui-library/src/AFKOverlay.ts) from the keyboard. Look through [`Application`](/Frontend/ui-library/src/Application/Application.ts) source to see what those conditions are, as well as how new overlays can be added.
+进一步的自定义也可以通过[`Overlays`](/Frontend/ui-library/src/Overlay)来完成。顾名思义，这些叠加层会在满足特定条件时覆盖在播放器页面上，例如当玩家[离开](/Frontend/ui-library/src/AFKOverlay.ts)键盘时。可以查看[`Application`](/Frontend/ui-library/src/Application/Application.ts)源代码，了解这些条件是什么，以及如何添加新的叠加层。
 
-### Customizing styling
+### 自定义样式
 
-For an overview on how to change the CSS style of the player and its component widgets, see [Customizing the Player Widget Style](/Frontend/Docs/Customizing%20the%20Player%20Widget%20Style.md).
+有关如何更改播放器及其组件小部件CSS样式的概述，请参见[自定义播放器小部件样式](/Frontend/Docs/Customizing%20the%20Player%20Widget%20Style.md)。
 
-## Changes to the base Pixel Streaming UI library
+## 对基础Pixel Streaming UI库的更改
 
-Additionally, deeper changes and expansions can be made to the `ui-library` project, which is used as the base for the Frontend UI implementations. Any useful changes can be merged in the main library through pull requests.
+此外，还可以对`ui-library`项目进行更深层次的更改和扩展，该项目作为前端UI实现的基础。任何有用的更改都可以通过拉取请求合并到主库中。

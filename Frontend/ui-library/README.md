@@ -1,24 +1,23 @@
 ## lib-pixelstreamingfrontend-ui
 
-A plugin library that add UI support to the `lib-pixelstreamingfrontend` library.
+一个插件库，提供对 `lib-pixelstreamingfrontend` 库的 UI 支持。
 
-This UI library depends on a the base library as a peer dependency, so you should include both as dependencies in your application
-if you want to use this library.
+这个 UI 库依赖于基础库作为对等依赖，因此如果你想使用这个库，你应该将这两个库作为依赖项包含在你的应用中。
 
-### Key features
-- Stock Pixel Streaming frontend
-- Setting panel
-- Info panel
+### 主要功能
+- 标准 Pixel Streaming 前端
+- 设置面板
+- 信息面板
 
-### Adding it to your project
+### 将其添加到你的项目中
 `npm i @epicgames-ps/lib-pixelstreamingfrontend-ue5.5`
 `npm i @epicgames-ps/lib-pixelstreamingfrontend-ui-ue5.5`
 
-### How this library is built
-The NPM packages supports:
-- ES6 module usage
-- CommonJS usage
-- Type definitions
-- Source maps
+### 如何构建此库
+NPM 包支持：
+- ES6 模块使用
+- CommonJS 使用
+- 类型定义
+- 源映射
 
-**Note:** The NPM package does not contain a minified/bundled output, this is up to the user to do this in their application.
+**注意：** NPM 包不包含已压缩/打包的输出，用户需要在其应用中进行此操作。

@@ -1,21 +1,20 @@
-## Communicating from the Player Page to UE5
+## 从玩家页面与 UE5 通信
 
-The frontend provides three functions that you can call in your HTML player page to allow the user to pass events and commands from the browser to your Unreal Engine application:
+前端提供了三个函数，您可以在 HTML 播放器页面中调用这些函数，以允许用户从浏览器向 Unreal Engine 应用程序传递事件和命令：
 
-*	`emitCommand` Allows sending arbitrary commands to the game in the form of JSON objects.
-*   You can use `emitConsoleCommand` to send console commands back to Unreal Engine. For example, `stat fps` to show the frame rate. See [Using the emitCommand Function below](#using-the-emitcommand-function).
-*   `emitUIInteraction` sends any arbitrary string or object to the game. Use this function to send your own custom commands from your player UI, which you can respond to in your gameplay logic to produce any effect you need in your application. See [Using the emitUIInteraction Function below](#using-the-emituiinteraction-function).
+*   `emitCommand` 允许以 JSON 对象的形式向游戏发送任意命令。
+*   您可以使用 `emitConsoleCommand` 向 Unreal Engine 发送控制台命令。例如，`stat fps` 显示帧率。请参见 [下面的使用 emitCommand 函数](#using-the-emitcommand-function)。
+*   `emitUIInteraction` 发送任意字符串或对象到游戏。使用此函数从您的玩家 UI 向游戏发送自定义命令，您可以在游戏逻辑中响应这些命令，以在应用程序中产生任何所需的效果。请参见 [下面的使用 emitUIInteraction 函数](#using-the-emituiinteraction-function)。
 
+### 使用 emitCommand 函数
 
-### Using the emitCommand Function
+当您调用 `emitCommand` 函数时，您传递给它一个对象，该对象会被转换为 JSON 并发送到游戏。然后，您可以使用它来实现任何您需要的自定义功能。
 
-When you call the `emitCommand` function, you pass it an object which then gets converted to JSON and sent onward to the game. This can then be used for implementing any sort of custom functionality you may require.
+#### 保留关键字
 
-#### Reserved Keywords
+虽然您可以根据自己的需要自由组织命令，但如果对象包含以下保留关键字之一，它将由 PixelStreaming 模块解释：
 
-Though you are given free reign to organize commands how you see fit, if the object contains a key with one of the following reserved keywords it will be interpreted by the PixelStreaming module instead:
-
-*   `ConsoleCommand` \- Use this key to execute a console command on the remote Unreal Engine application. The value of this key should be a string that contains the command you want to run, along with any parameters it needs. For example:
+*   `ConsoleCommand` - 使用此关键字在远程 Unreal Engine 应用程序上执行控制台命令。该关键字的值应为一个字符串，包含您要运行的命令及其需要的任何参数。例如：
 
 ```typescript
 	let descriptor = {
@@ -24,18 +23,16 @@ Though you are given free reign to organize commands how you see fit, if the obj
 	emitCommand(descriptor);
 ```
 
-**_NOTE:_**
-Due to the power of the Unreal Engine console commands, the `emitConsoleCommand` function can present a security risk. In order for this function to work, you also need to provide the `-AllowPixelStreamingCommands` parameter on the command line when you launch your Unreal Engine application or start it from the Unreal Editor using the Standalone Game option.
+**_注意:_**  
+由于 Unreal Engine 控制台命令的强大功能，`emitConsoleCommand` 函数可能带来安全风险。为了使此功能正常工作，您还需要在启动 Unreal Engine 应用程序或通过 Unreal 编辑器的独立游戏选项启动时，在命令行中提供 `-AllowPixelStreamingCommands` 参数。
 
+### 使用 emitConsoleCommand 函数
 
-### Using the emitConsoleCommand Function
+您还可以使用 `emitConsoleCommand` 以字符串的形式传递 Unreal Engine 控制台命令。与通过 `emitCommand` 传递命令类似，您必须在命令行中提供 `-AllowPixelStreamingCommands`，才能使这些命令生效。
 
-You may also use `emitConsoleCommand` to pass Unreal Engine console commands as a string. Like passing commands via `emitCommand`, you must provide `-AllowPixelStreamingCommands` on the command line when you launch your Unreal Engine application in order for these commands to be fielded.
+### 使用 emitUIInteraction 函数
 
-
-### Using the emitUIInteraction Function
-
-When you call the `emitUIInteraction` function, you can pass it a single string or object. For example:
+当您调用 `emitUIInteraction` 函数时，您可以传递一个字符串或对象。例如：
 
 ```typescript
 	emitUIInteraction("MyCustomCommand");
@@ -54,32 +51,29 @@ or
 	this.stream.emitUIInteraction(descriptor);
 ```
 
-If you pass an object, the `emitUIInteraction` function converts it to a JSON string internally. It then passes the resulting string back to the Pixel Streaming Plugin in your Unreal Engine application, which raises an event on the input controller. In your application's gameplay logic, you bind your own custom event to handle these inputs, using the **Pixel Streaming Input > Bind Event to On Input Event** node. For example:
+如果您传递一个对象，`emitUIInteraction` 函数会将其内部转换为 JSON 字符串。然后，它将结果字符串传回 Unreal Engine 应用程序中的 Pixel Streaming 插件，该插件会在输入控制器上引发一个事件。在您的游戏逻辑中，您可以绑定自己的自定义事件来处理这些输入，使用 **Pixel Streaming Input > Bind Event to On Input Event** 节点。例如：
 
 <p align="center">
-    <img src="Resources/Images/pixelstreaming-ui-interaction-event.png" alt="Bind Event to On Input Event">
+    <img src="Resources/Images/pixelstreaming-ui-interaction-event.png" alt="绑定事件到输入事件">
 </p>
 
-You need to bind this event once, typically at the start of your game. Each time any player HTML page connected to an instance of your Unreal Engine application calls the `emitUIInteraction` function, your custom event is automatically invoked, regardless of the input passed to `emitUIInteraction`.
+您只需要在游戏开始时绑定此事件。每次任何连接到您的 Unreal Engine 应用程序实例的玩家 HTML 页面调用 `emitUIInteraction` 函数时，您的自定义事件将自动触发，无论传递给 `emitUIInteraction` 的输入是什么。
 
-The custom event you assign (for example, the **UI Interaction** node in the image above) has an output named **Descriptor**, which you can use to retrieve the string that was sent to your Unreal Engine application by the `emitUIInteraction` function. You can use that value to determine how your gameplay code needs to respond each time `emitUIInteraction` is called.
+您分配的自定义事件（例如，图中 **UI Interaction** 节点）具有一个名为 **Descriptor** 的输出，您可以使用它来检索 `emitUIInteraction` 函数发送到 Unreal Engine 应用程序的字符串。您可以使用该值来确定每次调用 `emitUIInteraction` 时，游戏代码需要如何响应。
 
-For example, the following Blueprint tests to see whether the input given to `emitUIInteraction` contains the string "MyCustomCommand", and calls a custom function to handle the event:
-
+例如，以下 Blueprint 测试输入给 `emitUIInteraction` 的字符串是否包含 "MyCustomCommand"，并调用一个自定义函数来处理该事件：
 
 <p align="center">
-    <img src="Resources/Images/pixelstreaming-ui-interaction-search-substring.png" alt="Search for substring">
+    <img src="Resources/Images/pixelstreaming-ui-interaction-search-substring.png" alt="搜索子字符串">
 </p>
 
-If you originally passed a JavaScript object to `emitUIInteraction`, you can retrieve the value of any key from that JSON object using the **Pixel Streaming > Get Json String Value** node. For example, the following Blueprint tests for a key named LoadLevel. If that key is present, it calls a custom function to handle the event:
-
+如果您最初传递了一个 JavaScript 对象到 `emitUIInteraction`，您可以使用 **Pixel Streaming > Get Json String Value** 节点来检索该 JSON 对象中任何键的值。例如，以下 Blueprint 测试名为 LoadLevel 的键是否存在。如果存在，则调用一个自定义函数来处理该事件：
 
 <p align="center">
-    <img src="Resources/Images/pixelstreaming-ui-interaction-extract-json.png" alt="Get a JSON field value">
+    <img src="Resources/Images/pixelstreaming-ui-interaction-extract-json.png" alt="获取 JSON 字段值">
 </p>
 
+**_提示:_**  
+如果您需要检索嵌套的键，请使用 TypeScript 中常见的点号表示法来表示您的键。例如，`PlayerCharacter.Name` 或 `PlayerCharacter.Skin`。
 
-**_Tip:_**
-If you need to retrieve a nested key, use the dot notation common in TypeScript for your key.
-For example, `PlayerCharacter.Name` or `PlayerCharacter.Skin`.
 

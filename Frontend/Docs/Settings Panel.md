@@ -1,78 +1,74 @@
-# Frontend Setting Panel
+# 前端设置面板
 
-The Pixel Streaming frontend contains a settings panel that allows you to configure your Pixel Streaming user experience as needed - whether that be toggling features or connecting to different signalling servers.
+Pixel Streaming 前端包含一个设置面板，允许您根据需要配置 Pixel Streaming 用户体验 —— 无论是切换功能还是连接到不同的信令服务器。
 
-This page will be updated with new features and commands as they become available.
+本页面会随着新功能和命令的发布而更新。
 
-
-## Settings
-![Settings Panel](Resources/Images/settings-panel.png)
+## 设置
+![设置面板](Resources/Images/settings-panel.png)
 
 ### Pixel Streaming
 
-| **Setting** | **Description** |
+| **设置项** | **描述** |
 | --- | --- |
-| **Signalling URL** | The URL of the signalling server. |
-| **Streamer ID** | Allows you to select which streamer to stream. |
-| **Auto connect to stream** | Browser will automatically connect to the stream when loaded. Prevents having to click to start |
-| **Auto play video** | When the stream is ready, starts playing video immediately instead of showing a play button. |
-| **Browser send offer** | The browser will start the WebRTC handshake instead of the Unreal Engine application. This is an advanced setting for users customising the frontend. Primarily for backwards compatibility for 4.x versions of the engine. |
-| **Use microphone** | Will start receiving audio input from your microphone and transmit it to the Unreal Engine. |
-| **Start video muted** | Muted audio when the stream starts. |
-| **Is quality controller?** | Makes the encoder of the Pixel Streaming Plugin use the current browser connection to determine the bandwidth available, and therefore the quality of the stream encoding. **See notes below** |
-| **Force mono audio** | Force the browser to request mono audio in the SDP. |
-| **Force TURN** | Will attempt to connect exclusively via the TURN server. Will not work without an active TURN server. |
-| **Suppress browser keys** | Suppress or allow certain keys we use in UE, for example F5 to show shader complexity instead of refreshing the page. |
-| **AFK if Idle** | Timeout the connection if no input is detected for a period of time. |
-| **AFK timeout** | Allows you to specify the AFK timeout period. |
-| **Max Reconnects** | The maximum number of reconnects the application will attempt when a streamer disconnects. |
+| **信令 URL** | 信令服务器的 URL。 |
+| **Streamer ID** | 允许您选择要进行流式传输的 Streamer。 |
+| **自动连接到流** | 浏览器加载时会自动连接到流，无需点击启动。 |
+| **自动播放视频** | 当流准备好时，立即开始播放视频，而不是显示播放按钮。 |
+| **浏览器发送 offer** | 浏览器将启动 WebRTC 握手，而不是 Unreal Engine 应用程序。这是为自定义前端的用户提供的高级设置。主要用于与 4.x 版本引擎的向后兼容。 |
+| **使用麦克风** | 开始接收麦克风输入并将其传输到 Unreal Engine。 |
+| **启动时静音视频** | 启动流时音频静音。 |
+| **是质量控制器吗？** | 使 Pixel Streaming 插件的编码器使用当前浏览器连接来确定可用带宽，从而决定流编码的质量。**详见下方说明** |
+| **强制单声道音频** | 强制浏览器在 SDP 中请求单声道音频。 |
+| **强制 TURN** | 将尝试仅通过 TURN 服务器进行连接。没有活动的 TURN 服务器时将无法工作。 |
+| **抑制浏览器按键** | 抑制或允许在 UE 中使用的某些按键，例如按 F5 显示着色器复杂度而不是刷新页面。 |
+| **空闲时自动断开连接** | 如果一段时间内未检测到输入，连接将超时。 |
+| **空闲超时时间** | 允许您指定空闲超时的时间。 |
+| **最大重连次数** | 当 Streamer 断开连接时，应用程序将尝试的最大重连次数。 |
 
 ### UI
-| **Setting** | **Description** |
+| **设置项** | **描述** |
 | --- | --- |
-| **Match viewport resolution** | Resizes the Unreal Engine application resolution to match the browser's video element size.|
-| **Control scheme** | If the scheme is `locked mouse` the browser will use `pointerlock` to capture your mouse, whereas if the scheme is `hovering mouse` you will retain your OS/browser cursor. |
-| **Color scheme** | Allows you to switch between light mode and dark mode. |
+| **匹配视口分辨率** | 将 Unreal Engine 应用程序的分辨率调整为匹配浏览器视频元素的大小。 |
+| **控制方案** | 如果方案是 `locked mouse`，浏览器将使用 `pointerlock` 来捕获鼠标；如果方案是 `hovering mouse`，则保留操作系统/浏览器光标。 |
+| **颜色方案** | 允许您在浅色模式和深色模式之间切换。 |
 
-### Input
-| **Setting** | **Description** |
+### 输入
+| **设置项** | **描述** |
 | --- | --- |
-| **Keyboard input** | If enabled, captures and sends keyboard events to the Unreal Engine application. |
-| **Mouse input** | If enabled, captures and sends mouse events to the Unreal Engine application. |
-| **Touch input** | If enabled, captures and sends touch events to the Unreal Engine application. |
-| **Gamepad input** | If enabled, captures and sends gamepad events to the Unreal Engine application. |
-| **XR controller input** | If enabled, captures and sends XR controller events to the Unreal Engine application. |
+| **键盘输入** | 如果启用，捕获并发送键盘事件到 Unreal Engine 应用程序。 |
+| **鼠标输入** | 如果启用，捕获并发送鼠标事件到 Unreal Engine 应用程序。 |
+| **触摸输入** | 如果启用，捕获并发送触摸事件到 Unreal Engine 应用程序。 |
+| **游戏手柄输入** | 如果启用，捕获并发送游戏手柄事件到 Unreal Engine 应用程序。 |
+| **XR 控制器输入** | 如果启用，捕获并发送 XR 控制器事件到 Unreal Engine 应用程序。 |
 
-### Encoder
-| **Setting** | **Description** |
+### 编码器
+| **设置项** | **描述** |
 | --- | --- |
-| **Min QP** | The lower bound of quantization parameter (QP) of the encoder. 0 = best quality, 51 = worst quality. |
-| **Max QP** | The upper bound of quantization parameter (QP) of the encoder. 0 = best quality, 51 = worst quality. |
-| **Preferred codec** | The preferred codec to be used during codec negotiation. |
-| **Preferred quality** | The preferred quality of the stream when using the SFU. If using H.264 or VP8, the quality options will be easily readable "Low", "Medium" or "High". If using VP9 SVC, the options will refer to all the possible spatial and temporal layer combinations supported as seen [here](https://www.w3.org/TR/webrtc-svc/#scalabilitymodes*) |
+| **最小 QP** | 编码器的量化参数 (QP) 的下限。0 = 最佳质量，51 = 最差质量。 |
+| **最大 QP** | 编码器的量化参数 (QP) 的上限。0 = 最佳质量，51 = 最差质量。 |
+| **首选编解码器** | 在编解码器协商期间使用的首选编解码器。 |
+| **首选质量** | 使用 SFU 时流的首选质量。如果使用 H.264 或 VP8，质量选项将易于读取，如“低”，“中”，“高”。如果使用 VP9 SVC，选项将指所有可能的空间和时间层组合，详见 [这里](https://www.w3.org/TR/webrtc-svc/#scalabilitymodes*) |
 
 ### WebRTC
-| **Setting** | **Description** |
+| **设置项** | **描述** |
 | --- | --- |
-| **Max FPS** | The maximum FPS WebRTC will attempt to transmit frames at. |
-| **Min Bitrate (kbps)** | The minimum bitrate WebRTC should use. |
-| **Max Bitrate (kbps)** | The maximum bitrate WebRTC should use. |
+| **最大 FPS** | WebRTC 将尝试以最大 FPS 传输帧数。 |
+| **最小比特率 (kbps)** | WebRTC 应使用的最小比特率。 |
+| **最大比特率 (kbps)** | WebRTC 应使用的最大比特率。 |
 
-
-### Commands
-| **Setting** | **Description** |
+### 命令
+| **设置项** | **描述** |
 | --- | --- |
-| **Show FPS** | Will display the current FPS |
-| **Request Keyframe** | Will ask the stream for a keyframe. This is helpful if your stream is choppy and needs to catch up.  |
-| **Restart Stream** | Restarts the stream by disconnecting and reconnecting the websocket connection. |
+| **显示 FPS** | 将显示当前的 FPS |
+| **请求关键帧** | 将请求流发送关键帧。如果您的流出现卡顿并需要赶上进度，这将非常有帮助。 |
+| **重启流** | 通过断开并重新连接 WebSocket 连接来重启流。 |
 
+### 说明
 
-### Notes
+**质量控制器**  
+虽然 Pixel Streaming 会根据可用带宽调整流的质量，但在使用 H.264 时，视频帧仅由 Pixel Streaming 插件进行一次编码。这种一次编码将用于所有客户端。因此，只有一个客户端连接可以“拥有”自适应流媒体的质量。如果其他客户端与服务器的连接速度远远更好，它们可能会看到比实际需要的更低质量的流。另一方面，如果其他客户端与服务器的连接速度远远更差，它们可能会出现延迟或抖动。**注意**，如果您使用除 H.264 以外的任何编解码器（如 VP8 或 VP9），此质量控制器设置将完全无关。
 
-**Quality Controller**
-Although Pixel Streaming adapts the quality of the stream to match the available bandwidth, when using H.264, the video frames are only encoded once by the Pixel Streaming Plugin. That one encoding is used for all clients. Therefore, only one client connection can "own" the quality used for adaptive streaming. If the other clients have a much better connection to the server, they may end up seeing a lower quality stream than necessary. On the other hand, if other clients have a much worse connection to the server, they may end up with lag or jitter. **Note**, this quality controller setting is completely irrelevant if you are streaming using any codec other than H.264 (such as VP8 or VP9).
+## 法律
 
-
-## Legal
-
-Copyright &copy; 2025, Epic Games. Licensed under the MIT License, see the file [LICENSE](../../LICENSE.md) for details.
+版权所有 &copy; 2025，Epic Games。根据 MIT 许可证授权，详情请参阅 [LICENSE](../../LICENSE.md) 文件。
