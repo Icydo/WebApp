@@ -1,29 +1,29 @@
 ## TypeScript Reference Frontend
 
-This is the frontend we ship with the Pixel Streaming plugin. The reference frontend contains:
+这是我们与Pixel Streaming插件一起发布的前端。参考前端包含：
 
-1. The base `lib-pixelstreamingfrontend` library.
-2. The reference ui plugin for the base library `lib-pixelstreamingfrontend-ui`.
+1. 基础的`lib-pixelstreamingfrontend`库。
+2. 基于`lib-pixelstreamingfrontend`库的参考UI插件`lib-pixelstreamingfrontend-ui`。
 
-Using these two libraries gives a fully functional (and customizable) Pixel Streaming experience.
+使用这两个库可以提供一个功能完整（且可自定义）的Pixel Streaming体验。
 
-This package is also a good example of how to include the frontend libraries as dependencies and bundle/minify the final application you ship.
+该包也是一个很好的示例，展示了如何将前端库作为依赖项包含并打包/压缩最终的应用程序。
 
-### Key features of the reference frontend
-- An info panel (screen right) that provides a UI for displaying live statistics to the user.
-- A settings panel (screen right) that provides a UI for all the options inside [config.ts](/Frontend/library/src/Config/Config.ts).
-- A set of controls (screen left) to maximize the video, open the settings panel, open the info panel, and enter VR mode.
-- Ability to display overlays that present information or errors to the user, or present prompts for the user to interact with.
+### 参考前端的主要功能
+- 一个信息面板（屏幕右侧），提供一个UI，用于向用户显示实时统计信息。
+- 一个设置面板（屏幕右侧），提供一个UI，展示[config.ts](/Frontend/library/src/Config/Config.ts)中所有的选项。
+- 一组控件（屏幕左侧），用于最大化视频、打开设置面板、打开信息面板以及进入VR模式。
+- 能够显示叠加层，向用户展示信息或错误，或者展示提示让用户进行交互。
 
-### Building the reference frontend
+### 构建参考前端
 ```
 cd Frontend/implementations/typescript
 npm install
 npm run build-all
 ```
 
-### Using the reference frontend
-Building the reference frontend using the commands above will place it in the `SignallingWebServer/www` directory.
+### 使用参考前端
+使用上述命令构建参考前端后，它将被放置在`SignallingWebServer/www`目录。
 ```
 # Serve the reference frontend
 cd SignallingWebServer/platform_scripts/cmd
